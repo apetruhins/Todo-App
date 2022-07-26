@@ -12,9 +12,14 @@ struct AddTodoView: View {
     // MARK: - Properties
     
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.managedObjectContext) private var managedObjectContext
     
     @State private var name: String = ""
     @State private var priority: String = "Normal"
+    
+    @State private var errorShowing: Bool = false
+    @State private var errorTitle: String = ""
+    @State private var errorMessage: String = ""
     
     let priorities = [ "High", "Normal", "Low" ]
     
@@ -34,6 +39,29 @@ struct AddTodoView: View {
                     .pickerStyle(.segmented)
                     
                     Button {
+                        if self.name == "" {
+                            
+                            self.errorShowing = true
+                            self.errorTitle = "Invalid Name"
+                            self.errorMessage = "Make sure to enter something for\nthe new todo item."
+                            
+                            return
+                            
+                        } else {
+                        
+                            let todo = TodoItem(context: self.managedObjectContext)
+                            todo.name = self.name
+                            todo.priority = self.priority
+                            
+                            do {
+                                try self.managedObjectContext.save()
+                            } catch {
+                                print(error)
+                            }
+                            
+                            self.presentationMode.wrappedValue.dismiss()
+                            
+                        } //: If
                         
                     } label: {
                         Text("Save")
@@ -51,6 +79,9 @@ struct AddTodoView: View {
                 Image(systemName: "xmark")
             })
             )
+            .alert(isPresented: $errorShowing) {
+                Alert(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+            }
         } //: Navigation
     }
 }

@@ -13,12 +13,20 @@ struct ContentView: View {
     
     @State private var showingAddTodoView: Bool = false
     
+    // Fetching data
+    @Environment(\.managedObjectContext) private var managedObjectContext
+
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \TodoItem.name, ascending: true)],
+        animation: .default)
+    private var items: FetchedResults<TodoItem>
+    
     // MARK: - Body
     
     var body: some View {
         NavigationView {
-            List(0..<5) { item in
-                Text("Hello, World!")
+            List(items) { item in
+                Text(item.name ?? "")
             } //: List
             .navigationBarTitle("Todo", displayMode: .inline)
             .navigationBarItems(trailing:
@@ -29,6 +37,7 @@ struct ContentView: View {
                 }) //: Add button
                 .sheet(isPresented: $showingAddTodoView, content: {
                     AddTodoView()
+                        .environment(\.managedObjectContext, self.managedObjectContext)
                 })
             )
         } //: Navigation
@@ -39,6 +48,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
