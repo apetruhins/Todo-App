@@ -17,30 +17,57 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var managedObjectContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \TodoItem.name, ascending: true)],
-        animation: .default)
+        entity: TodoItem.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \TodoItem.name, ascending: true)])
     private var items: FetchedResults<TodoItem>
     
     // MARK: - Body
     
     var body: some View {
         NavigationView {
-            List(items) { item in
-                Text(item.name ?? "")
+            List {
+                ForEach(self.items, id: \.self) { item in
+                    HStack {
+                        Text(item.name ?? "")
+                        
+                        Spacer()
+                        
+                        Text(item.priority ?? "")
+                    }
+                }
+                .onDelete(perform: deleteTodo)
             } //: List
             .navigationBarTitle("Todo", displayMode: .inline)
-            .navigationBarItems(trailing:
-                Button(action: {
-                self.showingAddTodoView.toggle()
-                }, label: {
-                    Image(systemName: "plus")
-                }) //: Add button
-                .sheet(isPresented: $showingAddTodoView, content: {
-                    AddTodoView()
-                        .environment(\.managedObjectContext, self.managedObjectContext)
-                })
+            .navigationBarItems(
+                leading: EditButton(),
+                trailing:
+                    Button(action: {
+                    self.showingAddTodoView.toggle()
+                    }, label: {
+                        Image(systemName: "plus")
+                    }) //: Add button
+                    .sheet(isPresented: $showingAddTodoView, content: {
+                        AddTodoView()
+                            .environment(\.managedObjectContext, self.managedObjectContext)
+                    })
             )
         } //: Navigation
+    }
+    
+    // MARK: - Functions
+    
+    private func deleteTodo(at offsets: IndexSet) {
+        for index in offsets {
+            let todo = items[index]
+            
+            managedObjectContext.delete(todo)
+            
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 
