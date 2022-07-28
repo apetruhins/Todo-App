@@ -25,32 +25,41 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(self.items, id: \.self) { item in
-                    HStack {
-                        Text(item.name ?? "")
-                        
-                        Spacer()
-                        
-                        Text(item.priority ?? "")
+            ZStack {
+                List {
+                    ForEach(self.items, id: \.self) { item in
+                        HStack {
+                            Text(item.name ?? "")
+                            
+                            Spacer()
+                            
+                            Text(item.priority ?? "")
+                        }
                     }
+                    .onDelete(perform: deleteTodo)
+                } //: List
+                .navigationBarTitle("Todo", displayMode: .inline)
+                .navigationBarItems(
+                    leading: EditButton(),
+                    trailing:
+                        Button(action: {
+                        self.showingAddTodoView.toggle()
+                        }, label: {
+                            Image(systemName: "plus")
+                        }) //: Add button
+                        .sheet(isPresented: $showingAddTodoView, content: {
+                            AddTodoView()
+                                .environment(\.managedObjectContext, self.managedObjectContext)
+                        })
+                )
+                
+                // MARK: - No todo items
+                
+                if items.count == 0 {
+                    EmptyListView()
                 }
-                .onDelete(perform: deleteTodo)
-            } //: List
-            .navigationBarTitle("Todo", displayMode: .inline)
-            .navigationBarItems(
-                leading: EditButton(),
-                trailing:
-                    Button(action: {
-                    self.showingAddTodoView.toggle()
-                    }, label: {
-                        Image(systemName: "plus")
-                    }) //: Add button
-                    .sheet(isPresented: $showingAddTodoView, content: {
-                        AddTodoView()
-                            .environment(\.managedObjectContext, self.managedObjectContext)
-                    })
-            )
+                
+            } //: ZStack
         } //: Navigation
     }
     
