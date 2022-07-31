@@ -15,6 +15,8 @@ struct ContentView: View {
     @State private var animatingButton: Bool = false
     @State private var showingSettingsView: Bool = false
     
+    @EnvironmentObject var iconSettings: IconNames
+    
     // Fetching data
     @Environment(\.managedObjectContext) private var managedObjectContext
 
@@ -51,6 +53,7 @@ struct ContentView: View {
                         }) //: Add button
                         .sheet(isPresented: $showingSettingsView, content: {
                             SettingsView()
+                                .environmentObject(self.iconSettings)
                         })
                 )
                 
