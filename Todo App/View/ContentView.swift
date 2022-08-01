@@ -17,6 +17,8 @@ struct ContentView: View {
     
     @EnvironmentObject var iconSettings: IconNames
     
+    @ObservedObject var themeSettings = ThemeSettings()
+    
     // Fetching data
     @Environment(\.managedObjectContext) private var managedObjectContext
 
@@ -33,24 +35,41 @@ struct ContentView: View {
                 List {
                     ForEach(self.items, id: \.self) { item in
                         HStack {
+                            Circle()
+                                .frame(width: 12, height: 12, alignment: .center)
+                                .foregroundColor(self.colorize(priority: item.priority ?? ""))
+                            
                             Text(item.name ?? "")
+                                .fontWeight(.semibold)
                             
                             Spacer()
                             
                             Text(item.priority ?? "")
-                        }
+                                .font(.footnote)
+                                .foregroundColor(Color(uiColor: .systemGray2))
+                                .padding(3)
+                                .frame(minWidth: 62)
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color(uiColor: .systemGray2), lineWidth: 0.75)
+                                )
+                        } //: HStack
+                        .padding(.vertical, 10)
                     }
                     .onDelete(perform: deleteTodo)
                 } //: List
                 .navigationBarTitle("Todo", displayMode: .inline)
                 .navigationBarItems(
-                    leading: EditButton(),
-                    trailing:
+                    leading:
+                        EditButton()
+                            .accentColor(themeData[self.themeSettings.theme].themeColor)
+                    , trailing:
                         Button(action: {
                             self.showingSettingsView.toggle()
                         }, label: {
                             Image(systemName: "gearshape.fill")
                         }) //: Add button
+                        .accentColor(themeData[self.themeSettings.theme].themeColor)
                         .sheet(isPresented: $showingSettingsView, content: {
                             SettingsView()
                                 .environmentObject(self.iconSettings)
@@ -73,13 +92,13 @@ struct ContentView: View {
                     
                     Group {
                         Circle()
-                            .fill(Color.blue)
+                            .fill(themeData[self.themeSettings.theme].themeColor)
                             .opacity(self.animatingButton ? 0.2 : 0)
                             .scaleEffect(self.animatingButton ? 1 : 0)
                             .frame(width: 68, height: 68, alignment: .center)
                         
                         Circle()
-                            .fill(Color.blue)
+                            .fill(themeData[self.themeSettings.theme].themeColor)
                             .opacity(self.animatingButton ? 0.15 : 0)
                             .scaleEffect(self.animatingButton ? 1 : 0)
                             .frame(width: 88, height: 88, alignment: .center)
@@ -102,6 +121,7 @@ struct ContentView: View {
                             )
                             .frame(width: 48, height: 48, alignment: .center)
                     }) //: Button
+                    .accentColor(themeData[self.themeSettings.theme].themeColor)
                     .onAppear {
                         self.animatingButton.toggle()
                     }
@@ -112,6 +132,8 @@ struct ContentView: View {
                 , alignment: .bottomTrailing
             )
         } //: Navigation
+        .accentColor(themeData[self.themeSettings.theme].themeColor)
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     // MARK: - Functions
@@ -127,6 +149,19 @@ struct ContentView: View {
             } catch {
                 print(error)
             }
+        }
+    }
+    
+    private func colorize(priority: String) -> Color {
+        switch priority {
+            case "High":
+                return .pink
+            case "Normal":
+                return .green
+            case "Low":
+                return .blue
+            default:
+                return .gray
         }
     }
 }

@@ -28,6 +28,9 @@
 		FA93B17A288DB9C100E4BAD4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA93B179288DB9C100E4BAD4 /* Preview Assets.xcassets */; };
 		FA93B17F288DB9C100E4BAD4 /* Todo_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA93B17D288DB9C100E4BAD4 /* Todo_App.xcdatamodeld */; };
 		FA93B187288DBA0300E4BAD4 /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93B186288DBA0300E4BAD4 /* AddTodoView.swift */; };
+		FADD9E082897DB4F003583F5 /* ThemeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD9E072897DB4F003583F5 /* ThemeModel.swift */; };
+		FADD9E0A2897DB95003583F5 /* ThemeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD9E092897DB95003583F5 /* ThemeData.swift */; };
+		FADD9E0C2897DBF8003583F5 /* ThemeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADD9E0B2897DBF8003583F5 /* ThemeSettings.swift */; };
 		FAE77DC828903B4F000653B4 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE77DC728903B4F000653B4 /* Persistence.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +58,9 @@
 		FA93B179288DB9C100E4BAD4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FA93B17E288DB9C100E4BAD4 /* Todo_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Todo_App.xcdatamodel; sourceTree = "<group>"; };
 		FA93B186288DBA0300E4BAD4 /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
+		FADD9E072897DB4F003583F5 /* ThemeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeModel.swift; sourceTree = "<group>"; };
+		FADD9E092897DB95003583F5 /* ThemeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeData.swift; sourceTree = "<group>"; };
+		FADD9E0B2897DBF8003583F5 /* ThemeSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettings.swift; sourceTree = "<group>"; };
 		FAE77DC728903B4F000653B4 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +111,7 @@
 		FA93B171288DB9BF00E4BAD4 /* Todo App */ = {
 			isa = PBXGroup;
 			children = (
+				FADD9E062897DB40003583F5 /* Theme */,
 				FA540A052896E74100B7EF4F /* Todo-App-Info.plist */,
 				FA5409F22896E64700B7EF4F /* Icons */,
 				FA93B185288DB9E300E4BAD4 /* View */,
@@ -136,6 +143,16 @@
 				FA932F082894471B005DAFB2 /* FormRowLinkView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		FADD9E062897DB40003583F5 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				FADD9E072897DB4F003583F5 /* ThemeModel.swift */,
+				FADD9E092897DB95003583F5 /* ThemeData.swift */,
+				FADD9E0B2897DBF8003583F5 /* ThemeSettings.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 		FAE77DC628903B29000653B4 /* Model */ = {
@@ -228,8 +245,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA932F0528943EBC005DAFB2 /* SettingsView.swift in Sources */,
+				FADD9E0C2897DBF8003583F5 /* ThemeSettings.swift in Sources */,
 				FA932F07289444E0005DAFB2 /* FormRowStaticView.swift in Sources */,
 				FA932F092894471B005DAFB2 /* FormRowLinkView.swift in Sources */,
+				FADD9E0A2897DB95003583F5 /* ThemeData.swift in Sources */,
+				FADD9E082897DB4F003583F5 /* ThemeModel.swift in Sources */,
 				FA93B175288DB9BF00E4BAD4 /* ContentView.swift in Sources */,
 				FA93B173288DB9BF00E4BAD4 /* Todo_AppApp.swift in Sources */,
 				FA932F0328932C92005DAFB2 /* EmptyListView.swift in Sources */,
