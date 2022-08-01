@@ -23,7 +23,7 @@ struct AddTodoView: View {
     
     let priorities = [ "High", "Normal", "Low" ]
     
-    @ObservedObject var themeSettings = ThemeSettings()
+    @ObservedObject var themeSettings = ThemeSettings.shared
     
     // MARK: - Body
     

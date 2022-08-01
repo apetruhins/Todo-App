@@ -17,7 +17,7 @@ struct ContentView: View {
     
     @EnvironmentObject var iconSettings: IconNames
     
-    @ObservedObject var themeSettings = ThemeSettings()
+    @ObservedObject var themeSettings = ThemeSettings.shared
     
     // Fetching data
     @Environment(\.managedObjectContext) private var managedObjectContext

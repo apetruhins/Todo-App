@@ -15,7 +15,7 @@ struct SettingsView: View {
     
     @EnvironmentObject var iconSettings: IconNames
     
-    @ObservedObject var themeSettings = ThemeSettings()
+    @ObservedObject var themeSettings = ThemeSettings.shared
     @State private var isThemeChanged: Bool = false
     
     // MARK: - Body
@@ -121,9 +121,9 @@ struct SettingsView: View {
                         } //: List
                     } //: Section 2
                     .padding(.vertical, 3)
-                    .alert(isPresented: $isThemeChanged) {
-                        Alert(title: Text("Success!".uppercased()), message: Text("App has been changed to \(themeData[self.themeSettings.theme].themeName). Now close and restart it!"), dismissButton: .default(Text("OK")))
-                    }
+//                    .alert(isPresented: $isThemeChanged) {
+//                        Alert(title: Text("Success!".uppercased()), message: Text("App has been changed to \(themeData[self.themeSettings.theme].themeName). Now close and restart it!"), dismissButton: .default(Text("OK")))
+//                    }
                     
                     // MARK: - Section 3
                     

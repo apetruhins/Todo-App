@@ -25,7 +25,7 @@ struct EmptyListView: View {
         "Each night schedule for tomorrow"
     ]
     
-    @ObservedObject var themeSettings = ThemeSettings()
+    @ObservedObject var themeSettings = ThemeSettings.shared
     
     // MARK: - Body
     
